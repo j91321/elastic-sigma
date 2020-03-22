@@ -1,0 +1,32 @@
+title: Detects Suspicious Commands on Linux systems
+id: 1543ae20-cbdf-4ec1-8d12-7664d667a825
+status: experimental
+description: Detects relevant commands often related to malware or hacking activity
+references:
+    - Internal Research - mostly derived from exploit code including code in MSF
+date: 2017/12/12
+author: Florian Roth
+logsource:
+    product: linux
+    service: auditd
+detection:
+    cmd1:
+        syscall: 'execve'
+        name: 'chmod'
+        args: '777'
+    cmd2:
+        syscall: 'execve'
+        name: 'chmod'
+        args: 'u+s'
+    cmd3: 
+        syscall: 'execve'
+        name: 'cp'
+        args: '/bin/ksh'
+    cmd4:
+        syscall: 'execve'
+        name: 'cp'
+        args: '/bin/sh'
+    condition: 1 of them
+falsepositives:
+    - Admin activity
+level: medium

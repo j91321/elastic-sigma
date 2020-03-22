@@ -1,0 +1,23 @@
+title: Elastic Auditbeat (from 7.x) index pattern and field mapping
+order: 20
+backends:
+  - es-qs
+  - es-dsl
+  - es-rule
+  - kibana
+  - xpack-watcher
+  - elastalert
+  - elastalert-dsl
+logsources:
+  linux:
+    product: linux
+    index: auditbeat-*
+  linux-auditd:
+    product: linux
+    service: auditd
+defaultindex: auditbeat-*
+fieldmappings:
+    syscall: auditd.data.syscall
+    name: process.name
+    args: process.args
+    executable: process.executable

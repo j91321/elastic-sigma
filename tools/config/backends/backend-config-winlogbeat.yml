@@ -1,0 +1,3 @@
+keyword_blacklist: "file.path.keyword,file.name.keyword,process.executable.keyword,process.args.keyword,process.parent.keyword,destination.ip.keyword,destination.domain.keyword"
+keyword_field: ""
+index_patterns: "winlogbeat-*"
