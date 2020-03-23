@@ -1,4 +1,5 @@
 import sys
+import base64
 import requests
 import argparse
 import json
@@ -10,9 +11,9 @@ parser.add_argument('--user', type=str)
 parser.add_argument('--password', type=str)
 args = parser.parse_args()
 
-url = args.url+'/api/detection_engine/rules/_import?overwrite=true'
-username = args.user
-password = args.password
+url = base64.b64decode(args.url).decode('ascii')+'/api/detection_engine/rules/_import?overwrite=true'
+username = base64.b64decode(args.user).decode('ascii')
+password = base64.b64decode(args.password).decode('ascii')
 headers = {
   'kbn-xsrf': 'kibana'
   }
