@@ -1,0 +1,21 @@
+image: "python:3.7-buster"
+
+before_script:
+  - pip install -r ./tools/requirements.txt
+  - pip install requests
+  - chmod +x ./build_all_rules.sh
+  - chmod +x ./test_rules_import.py
+
+build-sigma:
+  stage: build
+  script:
+  - ./build_all_rules.sh
+  artifacts:
+    paths:
+    - ./es-rules-output
+    expire_in: 1 week
+
+test-import:
+  stage: test
+  script:
+  - python ./deploy_rules.py --url $KIBANAURL --user $KIBANAUSER --password $KIBANAPASS
