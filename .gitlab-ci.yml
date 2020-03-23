@@ -18,4 +18,4 @@ build-sigma:
 test-import:
   stage: test
   script:
-  - python ./deploy_rules.py --url $KIBANAURL --user $KIBANAUSER --password $KIBANAPASS
+  - python ./test_rules_import.py --url $KIBANAURL --user $KIBANAUSER --password $KIBANAPASS
