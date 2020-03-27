@@ -1,9 +1,5 @@
 image: "python:3.7-buster"
 
-services:
-  - elasticsearch:7.6.1
-  - kibana:7.6.1
-
 variables:
   XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: 11223344556677889900aabbccddeeff11223344556677889900aabbccddeeff
 
@@ -24,5 +20,11 @@ build-sigma:
 
 test-import:
   stage: test
+  services:
+  - name: elasticsearch:7.6.1
+    alias: elasticsearch
+    entrypoint: ["/bin/bash"]
+    command: ["-c", "env discovery.type=single-node ES_JAVA_OPTS='-Xms64m -Xmx64m' xpack.security.enabled=false es-docker"]
+  - kibana:7.6.1
   script:
   - python ./test_rules_import.py --kibana http://kibana:5601 --elasticsearch http://elasticsearch:9200
