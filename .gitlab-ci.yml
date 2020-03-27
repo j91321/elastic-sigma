@@ -1,5 +1,12 @@
 image: "python:3.7-buster"
 
+services:
+  - elasticsearch:7.6.1
+  - kibana:7.6.1
+
+variables:
+  XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: 11223344556677889900aabbccddeeff11223344556677889900aabbccddeeff
+
 before_script:
   - pip install -r ./tools/requirements.txt
   - pip install requests
@@ -18,4 +25,4 @@ build-sigma:
 test-import:
   stage: test
   script:
-  - python ./test_rules_import.py --url $KIBANAURL --user $KIBANAUSER --password $KIBANAPASS
+  - python ./test_rules_import.py --kibana http://kibana:5601 --elasticsearch http://elasticsearch:9200
