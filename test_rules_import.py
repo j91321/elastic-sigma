@@ -37,11 +37,13 @@ for sigma_rule in os.listdir(directory):
             response = requests.post(siem_url, headers=headers, files=files)
             if response.ok:
                 response_json = json.loads(response.text)
-                print(response.text)
                 if response_json['success']:
                     print("Success")
                 else:
                     print("Failed")
                     print(response.text)
                     exit_code = 1
+            else:
+                exit_code = 1
+                print(response.text)
 sys.exit(exit_code)
