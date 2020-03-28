@@ -25,5 +25,7 @@ test-import:
     alias: elasticsearch
     command: ["bin/elasticsearch", "-Ediscovery.type=single-node"]
   - kibana:7.6.1
+  tags:
+  - kibana
   script:
   - python ./test_rules_import.py --kibana http://kibana:5601 --elasticsearch http://elasticsearch:9200
