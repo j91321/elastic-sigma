@@ -31,7 +31,7 @@ if not response.ok:
     sys.exit(1)
 
 # Wait for Kibana service to start properly
-for i in range(10):
+for i in range(100):
     print("Waiting for Kibana API to become available")
     response = requests.get(kibana_api_test, headers=headers)
     if response.status_code == 503:
