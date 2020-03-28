@@ -36,7 +36,7 @@ for i in range(10):
     response = requests.get(kibana_api_test, headers=headers)
     if response.status_code == 503:
         print(response.text)
-        time.sleep(10)
+        time.sleep(30)
     else:
         print("Kibana API is ready")
         break
