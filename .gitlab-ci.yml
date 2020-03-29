@@ -3,8 +3,14 @@ image: "python:3.7-buster"
 before_script:
   - pip install -r ./tools/requirements.txt
   - pip install requests
+  - pip install yamllint
   - chmod +x ./build_all_rules.sh
   - chmod +x ./test_rules_import.py
+
+lint-sigma:
+  stage: build
+  script:
+  - yamllint rules
 
 build-sigma:
   stage: build
@@ -19,3 +25,17 @@ test-import:
   stage: test
   script:
   - python ./test_rules_import.py --url $KIBANAURL --user $KIBANAUSER --password $KIBANAPASS
+  tags:
+  - kibana
+  when: manual
+
+cat-rules:
+  stage: deploy
+  script:
+  - cat ./es-rules-output/* > sigma-rules.ndjson
+  artifacts:
+    paths:
+    - sigma-rules.ndjson
+  only:
+  - tags
+  - master
