@@ -28,3 +28,14 @@ test-import:
   tags:
   - kibana
   when: manual
+
+cat-rules:
+  stage: deploy
+  script:
+  - cat ./es-rules-output/* > sigma-rules.ndjson
+  artifacts:
+    paths:
+    - sigma-rules.ndjson
+  only:
+  - tags
+  - master
