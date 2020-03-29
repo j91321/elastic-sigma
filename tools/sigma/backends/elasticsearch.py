@@ -1109,7 +1109,7 @@ class ElasticSearchRuleBackend(ElasticsearchQuerystringBackend):
         description = configs.get("description", "")
         falsepositives = configs.get('falsepositives')
         references = configs.get("references")
-        if type(description) is not str or description = "":
+        if type(description) is not str or description == "":
             description = "Description placeholder"
         if type(falsepositives) is not list:
             falsepositives = []
