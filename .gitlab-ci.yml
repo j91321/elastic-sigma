@@ -25,6 +25,8 @@ test-import:
   stage: test
   script:
   - python ./test_rules_import.py --url $KIBANAURL --user $KIBANAUSER --password $KIBANAPASS
+  tags:
+  - kibana
   when: manual
 
 cat-rules:
