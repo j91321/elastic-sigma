@@ -1049,7 +1049,9 @@ class ElasticSearchRuleBackend(ElasticsearchQuerystringBackend):
                                 "reference": tech.get("url", "")
                             })
             temp_tactics.update({"technique": temp_techniques})
-            threat_list.append(temp_tactics)
+            # Maybe add check for tactics here
+            if temp_techniques:
+                threat_list.append(temp_tactics)
         return threat_list
 
     def find_tactics(self, key_name=None, key_id=None):
@@ -1104,10 +1106,19 @@ class ElasticSearchRuleBackend(ElasticsearchQuerystringBackend):
         rule_id = configs.get("title", "").lower().replace(" ", "_")
         risk_score = self.map_risk_score(configs.get("level", "medium"))
         tags.append("sigma")
+        description = configs.get("description", "")
+        falsepositives = configs.get('falsepositives')
+        references = configs.get("references")
+        if type(description) is not str or description == "":
+            description = "Description placeholder"
+        if type(falsepositives) is not list:
+            falsepositives = []
+        if type(references) is not list:
+            references = []
         rule = {
-            "description": configs.get("description", ""),
+            "description": description,
             "enabled": True,
-            "false_positives": configs.get('falsepositives'),
+            "false_positives": falsepositives,
             "filters": [],
             "from": "now-360s",
             "immutable": False,
@@ -1120,7 +1131,7 @@ class ElasticSearchRuleBackend(ElasticsearchQuerystringBackend):
             "risk_score": risk_score,
             "name": configs.get("title", ""),
             "query":configs.get("translation"),
-            "references": configs.get("references"),
+            "references": references,
             "meta": {
                 "from": "1m"
             },
