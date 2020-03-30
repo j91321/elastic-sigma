@@ -29,7 +29,7 @@ detection:
             - '*\lsm.exe'
             - '*\winlogon.exe'
             - '*\explorer.exe'
-            - '*\taskhost.exe' 
+            - '*\taskhost.exe'
     filter:
         Image:
             - 'C:\Windows\System32\\*'
